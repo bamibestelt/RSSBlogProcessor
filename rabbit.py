@@ -26,7 +26,8 @@ def start_listen_request_queue():
 
 def listen_to_queue(ch, method, properties, body):
     print(f"Received RSS to process: {body}")
-    links = parse_blog_links(body)
+    bytes_to_string = body.decode('utf-8')
+    links = parse_blog_links(bytes_to_string)
     send_blog_links_queue(links)
 
 
