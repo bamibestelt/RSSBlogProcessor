@@ -1,9 +1,6 @@
 import argparse
-from typing import List
 
-import feedparser
-
-from rabbit import start_listen_request_queue
+from rabbit import start_listen_request_queue, parse_blog_links
 
 test_rss = "https://deviesdevelopment.github.io/blog/posts/index.xml"
 
@@ -20,16 +17,6 @@ def main():
     # use message as rss link
     # reply back with list of url
     start_listen_request_queue()
-
-
-def parse_blog_links(rss_path: str) -> List[str]:
-    feed = feedparser.parse(rss_path)
-    print(f"feed entries: {len(feed.entries)}")
-    links = []
-    for entry in feed.entries:
-        links.append(entry.link)
-    print(f"total links: {len(links)}")
-    return links
 
 
 def parse_arguments():

@@ -5,7 +5,7 @@ from typing import List
 import pika
 from dotenv import load_dotenv
 
-from main import parse_blog_links
+import feedparser
 
 load_dotenv()
 
@@ -26,7 +26,8 @@ def start_listen_request_queue():
 
 def listen_to_queue(ch, method, properties, body):
     print(f"Received RSS to process: {body}")
-    parse_blog_links(body)
+    links = parse_blog_links(body)
+    send_blog_links_queue(links)
 
 
 def send_blog_links_queue(links: List[str]):
@@ -39,3 +40,12 @@ def send_blog_links_queue(links: List[str]):
     print(f"Blog links size {len(links)} sent!")
     connection.close()
 
+
+def parse_blog_links(rss_path: str) -> List[str]:
+    feed = feedparser.parse(rss_path)
+    print(f"feed entries: {len(feed.entries)}")
+    links = []
+    for entry in feed.entries:
+        links.append(entry.link)
+    print(f"total links: {len(links)}")
+    return links
