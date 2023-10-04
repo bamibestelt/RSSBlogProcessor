@@ -1,16 +1,15 @@
 import argparse
 
+from constant import TEST_RSS
 from rabbit import start_listen_request_queue, parse_blog_links
-
-test_rss = "https://deviesdevelopment.github.io/blog/posts/index.xml"
 
 
 def main():
-    print("Coda decoder starting...")
+    print("RSS processor starting...")
     args = parse_arguments()
     if args.t:
         print("decoding from hard coded rss path")
-        parse_blog_links(test_rss)
+        parse_blog_links(TEST_RSS)
         return
     # load RabbitMQ connection
     # listen to message queue
@@ -20,7 +19,7 @@ def main():
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Run Coda links decoder.')
+    parser = argparse.ArgumentParser(description='Run RSS link decoder.')
     parser.add_argument("-t",
                         action='store_true',
                         help='Use this flag to use test links defined in the code.')

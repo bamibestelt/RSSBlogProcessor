@@ -1,17 +1,10 @@
 import json
-import os
 from typing import List
 
-import pika
-from dotenv import load_dotenv
-
 import feedparser
+import pika
 
-load_dotenv()
-
-RABBIT_HOST = os.environ.get('RABBIT_HOST')
-REQUEST_QUEUE = os.environ.get('BLOG_REQUEST_QUEUE')
-BLOG_LINKS_QUEUE = os.environ.get('BLOG_REPLY_QUEUE')
+from constant import RABBIT_HOST, REQUEST_QUEUE, BLOG_LINKS_QUEUE
 
 
 def start_listen_request_queue():
