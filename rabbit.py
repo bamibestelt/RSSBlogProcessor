@@ -3,8 +3,7 @@ from typing import List
 
 import feedparser
 import pika
-
-from constant import RABBIT_HOST, REQUEST_QUEUE, BLOG_LINKS_QUEUE
+from constant import RABBIT_HOST, REQUEST_QUEUE, BLOG_LINKS_QUEUE, RSS_LINK
 
 
 def start_listen_request_queue():
@@ -18,9 +17,9 @@ def start_listen_request_queue():
 
 
 def listen_to_queue(ch, method, properties, body):
-    print(f"Received RSS to process: {body}")
-    bytes_to_string = body.decode('utf-8')
-    links = parse_blog_links(bytes_to_string)
+    # which one is best to set the source link? processor based or user based?
+    rss_link = body.decode('utf-8')
+    links = parse_blog_links(RSS_LINK)
     send_blog_links_queue(links)
 
 

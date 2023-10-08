@@ -1,6 +1,6 @@
 import argparse
 
-from constant import TEST_RSS
+from constant import RSS_LINK
 from rabbit import start_listen_request_queue, parse_blog_links
 
 
@@ -9,7 +9,7 @@ def main():
     args = parse_arguments()
     if args.t:
         print("decoding from hard coded rss path")
-        parse_blog_links(TEST_RSS)
+        parse_blog_links(RSS_LINK)
         return
     # load RabbitMQ connection
     # listen to message queue
